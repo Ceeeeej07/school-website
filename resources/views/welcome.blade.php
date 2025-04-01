@@ -14,6 +14,6 @@
 </head>
 <body>
     <x-navbar />
-
+    <x-slider />
 </body>
 </html>
