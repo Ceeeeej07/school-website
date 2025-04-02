@@ -1,4 +1,3 @@
-<!-- Container with max width and centering -->
 <div class="max-w-6xl mx-auto my-10 rounded-xl overflow-hidden shadow-xl">
     <!-- Slider with fixed height instead of h-screen -->
     <div x-data="{ 
@@ -8,14 +7,14 @@
             '{{ asset('storage/images/bg2.jpg') }}',
             '{{ asset('storage/images/bg3.jpg') }}',
         ],
-        titles: ['Discover Excellence', 'Build Your Future', 'Join Our Community'],
+        titles: ['Division Press Conference Champion', 'Walang PASOK!', 'Alumni Homecoming'],
         autoPlay: null 
     }" x-init="
-        autoPlay = setInterval(() => index = (index + 1) % images.length, 5000);
+        autoPlay = setInterval(() => index = (index + 1) % images.length, 4000);
         $watch('index', () => {
             clearTimeout(autoPlayRestart);
             autoPlayRestart = setTimeout(() => {
-                autoPlay = setInterval(() => index = (index + 1) % images.length, 5000);
+                autoPlay = setInterval(() => index = (index + 1) % images.length, 4000);
             }, 10000);
         })
     " @keydown.escape="clearInterval(autoPlay)" class="relative w-full h-[500px] overflow-hidden">
@@ -36,7 +35,7 @@
                 <!-- Text overlay -->
                 <div class="absolute bottom-0 left-0 right-0 p-8 transform transition-all duration-1000 ease-out" :class="index === i ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'">
                     <h2 x-text="titles[i]" class="text-3xl font-bold text-white mb-3"></h2>
-                    <p class="text-white/90 max-w-lg text-sm">Experience the difference with our premium services designed to exceed your expectations.</p>
+                    <p class="text-white/90 max-w-lg text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae</p>
                     <button class="mt-4 px-5 py-2 bg-white text-gray-900 font-semibold rounded-md hover:bg-gray-200 transition text-sm">Learn More</button>
                 </div>
             </div>
