@@ -22,15 +22,15 @@
         <x-navbar />
         <x-slider />
 
-        <div class="container mx-auto px-4 bg-gray-100">
+        <div class="container mx-auto px-4 bg-gray-100/70 rounded-2xl py-10 my-10 ">
             <!-- Section Header -->
             <div class="section-header text-center mb-12">
-                <h2 class="text-3xl font-bold mb-2 text-indigo-700">School Updates</h2>
-                <div class="w-24 h-1 bg-yellow-500 mx-auto"></div>
-                <p class="mt-4 text-gray-600">Stay updated with the latest happenings at Antipas National High School</p>
+                <h2 class="text-3xl font-bold mb-2 text-black">School Updates</h2>
+                <div class="w-30 h-1 bg-yellow-500 mx-auto"></div>
+                <p class="mt-4 text-black text-lg">Stay updated with the latest happenings at Antipas National High School</p>
             </div>
             <!-- Two-column Layout -->
-            <div class="flex flex-col md:flex-row gap-6">
+            <div class="flex flex-col sm:flex-row gap-6">
                 <!-- Left Column -->
                 <div class="w-full md:w-2/3">
                     @livewire('news')
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-
+        <x-footer.index />
 
 </body>
 </html>

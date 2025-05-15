@@ -8,7 +8,7 @@ new class extends Component {
 
 <div>
 
-    <h3 class="text-2xl font-bold mb-4 text-indigo-700 border-b border-gray-200 pb-2">Recent Awards</h3>
+    <h3 class="text-2xl font-bold mb-4 text-black border-b border-gray-200 pb-2">Recent Awards</h3>
 
     <!-- Award Item 1 -->
     <div class="award-item mb-6">
@@ -64,7 +64,7 @@ new class extends Component {
 
     <!-- View All Awards Button -->
     <div class="mt-6">
-        <a href="#" class="inline-block w-full text-center bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300 text-sm">
+        <a href="#" class="inline-block w-full text-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition duration-300 text-sm">
             View All Awards
         </a>
     </div>

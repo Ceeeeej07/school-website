@@ -1,4 +1,4 @@
-<div class="max-w-6xl mx-auto my-10 rounded-xl overflow-hidden shadow-xl">
+<div class="max-w-7xl mx-auto my-10 rounded-xl overflow-hidden shadow-xl">
     <!-- Slider with fixed height instead of h-screen -->
     <div x-data="{ 
         index: 0, 

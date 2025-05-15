@@ -7,13 +7,13 @@ new class extends Component {
 }; ?>
 
 <div>
-    <h3 class="text-2xl font-bold mb-6 text-indigo-700">Latest News</h3>
+    <h3 class="text-2xl font-bold mb-6 text-black">Latest News</h3>
 
     <!-- News Item 1 -->
     <div class="news-item bg-white rounded-lg shadow-lg overflow-hidden mb-6 transform transition duration-300 hover:shadow-xl">
         <div class="flex flex-col md:flex-row">
             <div class="md:w-1/3">
-                <img src="{{ asset('storage/images/news/academic-excellence.jpg') }}" alt="Academic Excellence Awards" class="w-full h-48 md:h-full object-cover">
+                <img src="{{ asset('storage/images/Teachers2.jpg') }}" alt="Academic Excellence Awards" class="w-full h-48 md:h-full object-cover">
             </div>
             <div class="md:w-2/3 p-6">
                 <div class="flex items-center justify-between mb-2">
@@ -27,7 +27,7 @@ new class extends Component {
                 </div>
                 <h3 class="text-xl font-semibold mb-3 text-gray-800">Academic Excellence Awards 2025</h3>
                 <p class="text-gray-600 mb-4">Congratulations to all students who received recognition during our annual Academic Excellence Awards ceremony. The event highlighted outstanding achievements across all grade levels.</p>
-                <a href="#" class="inline-block text-indigo-600 hover:text-indigo-800 font-medium">Read More →</a>
+                <a href="#" class="inline-block text-green-600 hover:text-green-800 font-medium">Read More →</a>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@ new class extends Component {
                 </div>
                 <h3 class="text-xl font-semibold mb-3 text-gray-800">Intramural Sports Festival Kicks Off</h3>
                 <p class="text-gray-600 mb-4">The annual intramural sports competition has begun with great enthusiasm from all participating classes. Events include basketball, volleyball, track and field, and more.</p>
-                <a href="#" class="inline-block text-indigo-600 hover:text-indigo-800 font-medium">Read More →</a>
+                <a href="#" class="inline-block text-green-600 hover:text-green-800 font-medium">Read More →</a>
             </div>
         </div>
     </div>
@@ -67,14 +67,14 @@ new class extends Component {
                 </div>
                 <h3 class="text-xl font-semibold mb-3 text-gray-800">Regional Science Fair Winners Announced</h3>
                 <p class="text-gray-600 mb-4">Our students took home several awards at the Regional Science Fair. Their innovative projects impressed the judges and showcased our school's commitment to STEM education.</p>
-                <a href="#" class="inline-block text-indigo-600 hover:text-indigo-800 font-medium">Read More →</a>
+                <a href="#" class="inline-block text-green-600 hover:text-green-800 font-medium">Read More →</a>
             </div>
         </div>
     </div>
 
     <!-- View All News Button -->
     <div class="text-center mt-8">
-        <a href="#" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-300 shadow-md">
+        <a href="#" class="inline-block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-800 transition duration-300 shadow-md">
             View All News
         </a>
     </div>
