@@ -19,6 +19,10 @@ Route::view('awards', 'awards')
     ->middleware(['auth', 'verified'])
     ->name('awards');
 
+Route::view('slider', 'slider')
+    ->middleware(['auth', 'verified'])
+    ->name('slider');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 

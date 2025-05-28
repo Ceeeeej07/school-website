@@ -2,9 +2,7 @@
     <!-- Top Bar -->
     <div class="bg-green-800 text-white">
         <div class="container mx-auto px-2 py-2 flex items-center">
-            <p class="flex-none">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
+            <p class="text-sm flex-none">&copy; {{ date('Y') }} Antipas National High School - Personal Project || Developed by Carl Jude C. Santoceldes</p>
             <div class="flex-grow text-right">
                 <a href="#" class="hover:text-black">Student Portal</a>
             </div>

@@ -1,4 +1,3 @@
 <x-layouts.app :title="__('News')">
-    <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
-    </div>
+    @livewire('admin.news')
 </x-layouts.app>

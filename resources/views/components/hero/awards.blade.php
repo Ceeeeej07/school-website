@@ -1,13 +1,4 @@
-<?php
-
-use Livewire\Volt\Component;
-
-new class extends Component {
-    //
-}; ?>
-
 <div>
-
     <h3 class="text-2xl font-bold mb-4 text-black border-b border-gray-200 pb-2">Recent Awards</h3>
 
     <!-- Award Item 1 -->

@@ -19,8 +19,8 @@
     </div>
 
     <div class="relative z-10">
-        <x-navbar />
-        <x-slider />
+        <x-hero.navbar />
+        <x-hero.slider />
 
         <div class="container mx-auto px-4 bg-gray-100/70 rounded-2xl py-10 my-10 ">
             <!-- Section Header -->
@@ -33,12 +33,12 @@
             <div class="flex flex-col sm:flex-row gap-6">
                 <!-- Left Column -->
                 <div class="w-full md:w-2/3">
-                    @livewire('news')
+                    @livewire('hero.NewsList', ['limit' => 5])
                 </div>
 
                 <!-- Right Column -->
                 <div class="w-full md:w-1/3 bg-white rounded-lg shadow-lg p-6">
-                    @livewire('awards')
+                    <x-hero.awards />
                 </div>
             </div>
         </div>
