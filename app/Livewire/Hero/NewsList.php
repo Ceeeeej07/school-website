@@ -10,9 +10,11 @@ class NewsList extends Component
     public $newsItems = [];
     public $loading = true;
     public $error = null;
-    public $limit = 5;
+    public $limit = 3;
 
-    public function mount($limit = 5)
+
+
+    public function mount($limit = 3)
     {
         $this->limit = $limit;
         $this->loadNews();
@@ -23,6 +25,7 @@ class NewsList extends Component
         $this->loading = true;
         $this->loadNews();
     }
+
 
     protected function loadNews()
     {

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->boolean('is_featured')->default(false);
             $table->string('slug')->unique();
             $table->text('description');
             $table->text('content');

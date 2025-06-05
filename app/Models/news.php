@@ -12,6 +12,9 @@ class news extends Model
         'description',
         'content',
         'image',
+        'author',
+        'category',
+        'status',
     ];
     protected $casts = [
         'created_at' => 'datetime',

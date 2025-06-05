@@ -1,3 +1,3 @@
 <x-layouts.app :title="__('News')">
-    @livewire('admin.news')
+    @livewire('admin.news-admin')
 </x-layouts.app>
