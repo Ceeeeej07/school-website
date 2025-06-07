@@ -62,12 +62,9 @@
                             <div class="flex items-center">
                                 <div class="text-sm font-medium text-gray-900 flex items-center gap-2">
                                     {{ $n->title }}
-
-                                    <!-- TODO fix this 
-                                                {{-- @if(Boolean($n->is_featured == true)) --}}
-                                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Featured</span>
-                                                {{-- @endif --}}
-                        -->
+                                    @if($n['is_featured'] ?? false)
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Featured</span>
+                                    @endif
                                 </div>
                             </div>
                         </td>
