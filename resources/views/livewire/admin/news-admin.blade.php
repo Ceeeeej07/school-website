@@ -16,18 +16,18 @@
             <div class="flex flex-col md:flex-row gap-4">
                 <div class="relative flex-1">
                     <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    <input type="text" placeholder="Search news..." class="bg-gray-600 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring">
+                    <input type="text" wire:model.live="search" placeholder="Search news..." class="bg-gray-600 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring">
                 </div>
-                <select class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring">
-                    <option>All Status</option>
-                    <option>Published</option>
-                    <option>Draft</option>
+                <select wire:model.live="status" class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring">
+                    <option value="%">All Status</option>
+                    <option value="Published">Published</option>
+                    <option value="Draft">Draft</option>
                 </select>
-                <select class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring">
-                    <option>All Categories</option>
-                    <option>Technology</option>
-                    <option>Business</option>
-                    <option>Sports</option>
+                <select wire:model.live="category" class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring">
+                    <option value="%">All Categories</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Business">Business</option>
+                    <option value="Sports">Sports</option>
                 </select>
             </div>
         </div>
@@ -97,30 +97,10 @@
         </div>
 
         <!-- Pagination -->
-        <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-            <div class="flex-1 flex justify-between sm:hidden">
-                <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Previous</button>
-                <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Next</button>
-            </div>
-            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                <div>
-                    <p class="text-sm text-gray-700">Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span class="font-medium">97</span> results</p>
-                </div>
-                <div>
-                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
-                        <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">1</button>
-                        <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">2</button>
-                        <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">3</button>
-                        <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </nav>
-                </div>
-            </div>
+        <div class="d-flex justify-content-center bg-white p-4 rounded-b-xl">
+            {{ $newsList->links('vendor.pagination.tailwind') }}
         </div>
+
     </div>
 
 

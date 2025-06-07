@@ -6,12 +6,15 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\News;
 use Illuminate\Support\Str;
+use Livewire\WithPagination;
 
 class NewsAdmin extends Component
 {
     use WithFileUploads;
+    use WithPagination;
 
-    public $newsList = [];
+    public $perPage = 5;
+    public $search = '';
     public $title = '';
     public $is_featured = false;
     public $slug;
@@ -20,8 +23,10 @@ class NewsAdmin extends Component
     public $image;
     public $author;
     public $category;
-    public $status = 'Draft';
+    public $status;
 
+
+    protected $paginationTheme = 'tailwind';
     protected $rules = [
         'title' => 'required|string|max:255',
         'is_featured' => 'required|boolean',
@@ -31,33 +36,38 @@ class NewsAdmin extends Component
         'description' => 'required|string|max:500',
         'author' => 'required|string|max:100',
         'category' => 'required|string|max:100',
-        'status' => 'in:Draft,Published,Archived',
+        'status' => 'in:Draft,Published',
     ];
 
     public function mount()
     {
         $this->slug = Str::slug($this->title);
-        $this->loadNewsAdmin();
     }
 
-    public function fetchNewsAdmin()
+    // * Search and pagination
+    public function updatingSearch()
     {
-        $this->loadNewsAdmin();
+        $this->resetPage();
     }
-
-    public function loadNewsAdmin()
+    public function updatingPerPage()
     {
-        try {
-            $this->newsList = News::latest()->get();
-        } catch (\Exception $e) {
-            session()->flash('error', 'Failed to load news: ' . $e->getMessage());
-            $this->newsList = [];
-        }
+        $this->resetPage();
+    }
+    public function getNewsListProperty()
+    {
+        return News::where('title', 'like', '%' . $this->search . '%')
+            ->orWhere('author', 'like', '%' . $this->search . '%')
+            ->orWhere('category', 'like', '%' . $this->search . '%')
+            ->orderBy('created_at', 'desc')
+            ->paginate($this->perPage);
     }
 
 
+    // *Fetch news for admin panel
 
 
+
+    // * Store or update news
     public function store()
     {
         $this->validate();
@@ -94,8 +104,33 @@ class NewsAdmin extends Component
     }
 
 
+
     public function render()
     {
-        return view('livewire.admin.news-admin');
+        $query = News::query(); // Assuming your model is called News
+
+        // Apply search filter
+        if (!empty($this->search)) {
+            $query->where(function ($q) {
+                $q->where('title', 'like', '%' . $this->search . '%')
+                    ->orWhere('description', 'like', '%' . $this->search . '%')
+                    ->orWhere('content', 'like', '%' . $this->search . '%')
+                    ->orWhere('author', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        // Apply status filter
+        if (!empty($this->status) && $this->status !== '%') {
+            $query->where('status', $this->status);
+        }
+
+        // Apply category filter
+        if (!empty($this->category) && $this->category !== '%') {
+            $query->where('category', $this->category);
+        }
+
+        // $this->newsList = $query->paginate(5);
+
+        return view('livewire.admin.news-admin', ['newsList' => News::latest()->paginate(5)]);
     }
 }
