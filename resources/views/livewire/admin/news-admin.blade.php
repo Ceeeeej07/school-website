@@ -14,21 +14,22 @@
 
             <!-- Filters & Search -->
             <div class="flex flex-col md:flex-row gap-4">
-                <div class="relative flex-1">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    <input type="text" wire:model.live="search" placeholder="Search news..." class="bg-gray-600 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring">
-                </div>
-                <select wire:model.live="status" class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring">
-                    <option value="">All Status</option>
-                    <option value="Published">Published</option>
-                    <option value="Draft">Draft</option>
-                </select>
-                <select wire:model.live="category" class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring">
-                    <option value="%">All Categories</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Business">Business</option>
-                    <option value="Sports">Sports</option>
-                </select>
+                <!-- Search input - will expand to fill available space -->
+                <flux:input type="text" wire:model.live="search" placeholder="Search news..." class="flex-grow md:flex-grow-[2]" />
+
+                <!-- Dropdowns with fixed widths -->
+                <flux:select wire:model.live="status" class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring w-full md:w-48">
+                    <flux:select.option value="">All Status</flux:select.option>
+                    <flux:select.option value="Published">Published</flux:select.option>
+                    <flux:select.option value="Draft">Draft</flux:select.option>
+                </flux:select>
+
+                <flux:select wire:model.live="category" class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring w-full md:w-48">
+                    <flux:select.option value="">All Categories</flux:select.option>
+                    <flux:select.option value="Technology">Academic</flux:select.option>
+                    <flux:select.option value="Business">Entertainment</flux:select.option>
+                    <flux:select.option value="Sports">Sports</flux:select.option>
+                </flux:select>
             </div>
         </div>
 
@@ -46,7 +47,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @if(empty($newsList))
+                    @if($newsList->isEmpty())
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4" colspan="6">
                             <div class="flex flex-col items-center">
@@ -56,8 +57,8 @@
                         </td>
                     </tr>
                     @else
+                    @foreach($newsList as $n)
                     <div wire:key="news-list">
-                        @foreach($newsList as $n)
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4">
                                 <div class="flex items-center">
@@ -74,7 +75,7 @@
                                 <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">{{ $n->category }}</span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">{{ $n->status ? 'Published' : 'Draft' }}</span>
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">{{ $n->status }}</span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \Carbon\Carbon::parse($n['created_at'])->format('F d, Y')}}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

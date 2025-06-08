@@ -22,8 +22,9 @@ class NewsAdmin extends Component
     public $content;
     public $image;
     public $author;
-    public $category;
+    public $category = '';
     public $status = '';
+
 
 
     protected $paginationTheme = 'tailwind';
@@ -35,7 +36,7 @@ class NewsAdmin extends Component
         'content' => 'required|string',
         'description' => 'required|string|max:500',
         'author' => 'required|string|max:100',
-        'category' => 'required|string|max:100',
+        'category' => 'in:Academic,Entertainment,Sports',
         'status' => 'in:Draft,Published',
     ];
 
@@ -84,7 +85,6 @@ class NewsAdmin extends Component
         ];
 
         $data['is_featured'] = (bool) $this->is_featured;
-        $data['status'] = $this->status ?: 'Draft';
 
         if ($this->image) {
             $this->image->store('news', 'public');
