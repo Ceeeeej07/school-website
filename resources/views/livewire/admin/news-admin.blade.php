@@ -19,7 +19,7 @@
                     <input type="text" wire:model.live="search" placeholder="Search news..." class="bg-gray-600 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring">
                 </div>
                 <select wire:model.live="status" class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring">
-                    <option value="%">All Status</option>
+                    <option value="">All Status</option>
                     <option value="Published">Published</option>
                     <option value="Draft">Draft</option>
                 </select>
@@ -56,49 +56,51 @@
                         </td>
                     </tr>
                     @else
-                    @foreach($newsList as $n)
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4">
-                            <div class="flex items-center">
-                                <div class="text-sm font-medium text-gray-900 flex items-center gap-2">
-                                    {{ $n->title }}
-                                    @if($n['is_featured'] ?? false)
-                                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Featured</span>
-                                    @endif
+                    <div wire:key="news-list">
+                        @foreach($newsList as $n)
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <div class="text-sm font-medium text-gray-900 flex items-center gap-2">
+                                        {{ $n->title }}
+                                        @if($n['is_featured'] ?? false)
+                                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Featured</span>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $n->author }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">{{ $n->category }}</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">{{ $n->is_published ? 'Published' : 'Draft' }}</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \Carbon\Carbon::parse($n['created_at'])->format('F d, Y')}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex items-center gap-2">
-                                <button class="text-blue-600 hover:text-blue-900" title="View">
-                                    <flux:icon.eye class="size-6" />
-                                </button>
-                                <button class="text-green-600 hover:text-green-900" title="Edit">
-                                    <flux:icon.pencil-square class="size-6" />
-                                </button>
-                                <button class="text-red-600 hover:text-red-900" title="Delete">
-                                    <flux:icon.trash class="size-6" />
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $n->author }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">{{ $n->category }}</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">{{ $n->status ? 'Published' : 'Draft' }}</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \Carbon\Carbon::parse($n['created_at'])->format('F d, Y')}}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex items-center gap-2">
+                                    <button class="text-blue-600 hover:text-blue-900" title="View">
+                                        <flux:icon.eye class="size-6" />
+                                    </button>
+                                    <button class="text-green-600 hover:text-green-900" title="Edit">
+                                        <flux:icon.pencil-square class="size-6" />
+                                    </button>
+                                    <button class="text-red-600 hover:text-red-900" title="Delete">
+                                        <flux:icon.trash class="size-6" />
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </div>
                     @endif
                 </tbody>
             </table>
         </div>
 
         <!-- Pagination -->
-        <div class="d-flex justify-content-center bg-white p-4 rounded-b-xl">
-            {{ $newsList->links('vendor.pagination.tailwind') }}
+        <div wire:key="news-pagination" class="d-flex justify-content-center bg-white p-4 rounded-b-xl">
+            {{ $newsList->links() }}
         </div>
 
     </div>

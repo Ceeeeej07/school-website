@@ -23,7 +23,7 @@ class NewsAdmin extends Component
     public $image;
     public $author;
     public $category;
-    public $status;
+    public $status = '';
 
 
     protected $paginationTheme = 'tailwind';
@@ -83,11 +83,8 @@ class NewsAdmin extends Component
             'status' => $this->status,
         ];
 
-        if ($this->is_featured) {
-            $data['is_featured'] = true;
-        } else {
-            $data['is_featured'] = false;
-        }
+        $data['is_featured'] = (bool) $this->is_featured;
+        $data['status'] = $this->status ?: 'Draft';
 
         if ($this->image) {
             $this->image->store('news', 'public');
@@ -107,30 +104,25 @@ class NewsAdmin extends Component
 
     public function render()
     {
-        $query = News::query(); // Assuming your model is called News
+        $query = News::query()
+            ->when($this->search, function ($q) {
+                $q->where(function ($query) {
+                    $query->where('title', 'like', '%' . $this->search . '%')
+                        ->orWhere('description', 'like', '%' . $this->search . '%')
+                        ->orWhere('content', 'like', '%' . $this->search . '%')
+                        ->orWhere('author', 'like', '%' . $this->search . '%');
+                });
+            })
+            ->when($this->status, function ($q) {
+                $q->where('status', $this->status);
+            })
+            ->when($this->category, function ($q) {
+                $q->where('category', $this->category);
+            })
+            ->latest();
 
-        // Apply search filter
-        if (!empty($this->search)) {
-            $query->where(function ($q) {
-                $q->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('description', 'like', '%' . $this->search . '%')
-                    ->orWhere('content', 'like', '%' . $this->search . '%')
-                    ->orWhere('author', 'like', '%' . $this->search . '%');
-            });
-        }
-
-        // Apply status filter
-        if (!empty($this->status) && $this->status !== '%') {
-            $query->where('status', $this->status);
-        }
-
-        // Apply category filter
-        if (!empty($this->category) && $this->category !== '%') {
-            $query->where('category', $this->category);
-        }
-
-        // $this->newsList = $query->paginate(5);
-
-        return view('livewire.admin.news-admin', ['newsList' => News::latest()->paginate(5)]);
+        return view('livewire.admin.news-admin', [
+            'newsList' => $query->paginate($this->perPage)->withQueryString()
+        ]);
     }
 }
