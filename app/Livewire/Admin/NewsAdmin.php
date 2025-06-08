@@ -24,6 +24,9 @@ class NewsAdmin extends Component
     public $author;
     public $category = '';
     public $status = '';
+    public $isOpen = false;
+
+
 
 
 
@@ -64,11 +67,37 @@ class NewsAdmin extends Component
     }
 
 
-    // *Fetch news for admin panel
+    // * Modal for creating
 
+    public function createNews()
+    {
+        $this->resetInput();
+        $this->openModal();
+    }
+    public function openModal()
+    {
+        $this->isOpen = true;
+    }
+    public function closeModal()
+    {
+        $this->isOpen = false;
+        $this->resetInput();
+    }
+    private function resetInput()
+    {
+        $this->reset([
+            'title',
+            'description',
+            'is_featured',
+            'content',
+            'image',
+            'author',
+            'category',
+            'status'
+        ]);
+    }
 
-
-    // * Store or update news
+    // * Store news
     public function store()
     {
         $this->validate();
@@ -76,7 +105,6 @@ class NewsAdmin extends Component
         $data = [
             'title' => $this->title,
             'is_featured' => $this->is_featured,
-            'slug' => Str::slug($this->title),
             'description' => $this->description,
             'content' => $this->content,
             'author' => $this->author,
@@ -94,13 +122,29 @@ class NewsAdmin extends Component
             ['slug' => $data['slug']],
             array_merge($data, ['image' => $this->image ? $this->image->hashName() : null])
         );
-        $this->reset(['title', 'description', 'is_featured', 'content', 'image', 'author', 'category', 'status']);
+        $this->reset(['title', 'is_featured', 'description', 'content', 'image', 'author', 'category', 'status']);
 
 
         session()->flash('message', 'News created successfully.');
     }
 
+    // * update/edit news
+    public function editNews(News $news)
+    {
+        $this->validate();
 
+        $newsList = News::findOrFail($news->id);
+        $this->title = $newsList->title;
+        $this->is_featured = $newsList->is_featured;
+        $this->description = $newsList->description;
+        $this->image = $newsList->image;
+        $this->content = $newsList->content;
+        $this->author = $newsList->author;
+        $this->category = $newsList->category;
+        $this->status = $newsList->status;
+
+        $this->openModal();
+    }
 
     public function render()
     {
