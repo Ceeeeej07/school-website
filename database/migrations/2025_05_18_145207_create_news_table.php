@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->boolean('is_featured')->default(false);
-            $table->string('slug')->unique();
+            $table->string('author');
+            $table->string('category');
+            $table->string('status');
             $table->text('description');
             $table->text('content');
             $table->string('image')->nullable();

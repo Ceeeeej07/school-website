@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Livewire\Forms\NewsForm;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\News;
@@ -13,20 +14,17 @@ class NewsAdmin extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public $perPage = 5;
-    public $search = '';
-    public $title = '';
+    public $title;
     public $is_featured = false;
-    public $slug;
     public $description;
     public $content;
     public $image;
     public $author;
     public $category = '';
     public $status = '';
-    public $isOpen = false;
 
-
+    public $perPage = 5;
+    public $search = '';
 
 
 
@@ -34,19 +32,13 @@ class NewsAdmin extends Component
     protected $rules = [
         'title' => 'required|string|max:255',
         'is_featured' => 'required|boolean',
-        'slug' => 'required|string|max:255|unique:news,slug',
-        'image' => 'required|image',
+        'image' => 'nullable|image|max:2048',
         'content' => 'required|string',
         'description' => 'required|string|max:500',
         'author' => 'required|string|max:100',
         'category' => 'in:Academic,Entertainment,Sports',
         'status' => 'in:Draft,Published',
     ];
-
-    public function mount()
-    {
-        $this->slug = Str::slug($this->title);
-    }
 
     // * Search and pagination
     public function updatingSearch()
@@ -67,84 +59,39 @@ class NewsAdmin extends Component
     }
 
 
-    // * Modal for creating
 
-    public function createNews()
-    {
-        $this->resetInput();
-        $this->openModal();
-    }
-    public function openModal()
-    {
-        $this->isOpen = true;
-    }
-    public function closeModal()
-    {
-        $this->isOpen = false;
-        $this->resetInput();
-    }
-    private function resetInput()
-    {
-        $this->reset([
-            'title',
-            'description',
-            'is_featured',
-            'content',
-            'image',
-            'author',
-            'category',
-            'status'
-        ]);
-    }
 
     // * Store news
-    public function store()
+
+
+    public function testSubmit()
     {
-        $this->validate();
+        dd('test');
+    }
 
-        $data = [
-            'title' => $this->title,
-            'is_featured' => $this->is_featured,
-            'description' => $this->description,
-            'content' => $this->content,
-            'author' => $this->author,
-            'category' => $this->category,
-            'status' => $this->status,
-        ];
-
-        $data['is_featured'] = (bool) $this->is_featured;
-
-        if ($this->image) {
-            $this->image->store('news', 'public');
-        }
-
-        News::updateOrCreate(
-            ['slug' => $data['slug']],
-            array_merge($data, ['image' => $this->image ? $this->image->hashName() : null])
-        );
-        $this->reset(['title', 'is_featured', 'description', 'content', 'image', 'author', 'category', 'status']);
-
-
-        session()->flash('message', 'News created successfully.');
+    // * redirector
+    public function addNews()
+    {
+        return redirect()->route('create-news');
     }
 
     // * update/edit news
-    public function editNews(News $news)
-    {
-        $this->validate();
+    // public function editNews(News $news)
+    // {
+    //     $this->validate();
 
-        $newsList = News::findOrFail($news->id);
-        $this->title = $newsList->title;
-        $this->is_featured = $newsList->is_featured;
-        $this->description = $newsList->description;
-        $this->image = $newsList->image;
-        $this->content = $newsList->content;
-        $this->author = $newsList->author;
-        $this->category = $newsList->category;
-        $this->status = $newsList->status;
+    //     $newsList = News::findOrFail($news->id);
+    //     $this->title = $newsList->title;
+    //     $this->is_featured = $newsList->is_featured;
+    //     $this->description = $newsList->description;
+    //     $this->image = $newsList->image;
+    //     $this->content = $newsList->content;
+    //     $this->author = $newsList->author;
+    //     $this->category = $newsList->category;
+    //     $this->status = $newsList->status;
 
-        $this->openModal();
-    }
+    //     $this->openModal();
+    // }
 
     public function render()
     {
@@ -168,5 +115,17 @@ class NewsAdmin extends Component
         return view('livewire.admin.news-admin', [
             'newsList' => $query->paginate($this->perPage)->withQueryString()
         ]);
+
+        // return view('livewire.admin.news-admin', [
+        //     'newsList' => News::query()
+        //         ->where('title', 'like', '%' . $this->search . '%')
+        //         ->orWhere('author', 'like', '%' . $this->search . '%')
+        //         ->orWhere('category', 'like', '%' . $this->search . '%')
+        //         ->orderBy('created_at', 'desc')
+        //         ->paginate($this->perPage)
+        //         ->withQueryString(),
+        //     'categories' => ['Academic', 'Entertainment', 'Sports'],
+        //     'statuses' => ['Draft', 'Published']
+        // ]);
     }
 }

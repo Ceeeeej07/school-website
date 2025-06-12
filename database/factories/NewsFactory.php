@@ -18,7 +18,7 @@ class NewsFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'slug' => $this->faker->unique()->slug(),
+            // 'slug' => $this->faker->unique()->slug(),
             'is_featured' => $this->faker->boolean(),
             'image' => $this->faker->imageUrl(640, 480, 'news', true),
             'description' => $this->faker->paragraph(),

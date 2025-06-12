@@ -23,6 +23,11 @@ Route::view('slider', 'slider')
     ->middleware(['auth', 'verified'])
     ->name('slider');
 
+Route::view('create-news', 'create-news')
+    ->middleware(['auth', 'verified'])
+    ->name('create-news');
+
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
