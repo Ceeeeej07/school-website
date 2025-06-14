@@ -26,6 +26,8 @@ class NewsAdmin extends Component
     public $perPage = 5;
     public $search = '';
 
+    public $isOpen = false;
+
 
 
     protected $paginationTheme = 'tailwind';
@@ -61,7 +63,16 @@ class NewsAdmin extends Component
 
 
 
-    // * Store news
+    // * modal
+    public function openModal()
+    {
+        $this->isOpen = true;
+    }
+    public function closeModal()
+    {
+        $this->isOpen = false;
+    }
+
 
 
     public function testSubmit()

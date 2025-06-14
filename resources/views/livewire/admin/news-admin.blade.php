@@ -6,10 +6,16 @@
                     <h1 class="text-3xl font-bold text-white">News Management</h1>
                     <p class="text-gray-400 mt-1">Manage your news articles</p>
                 </div>
-                <a href={{ route('create-news') }} wire:click="addNews" class="bg-yellow-600 hover:bg-yellow-700 text-black px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+
+                <button wire:click="openModal" class="bg-yellow-600 hover:bg-yellow-700 text-black px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
                     <flux:icon.plus class="size-6" />
                     Add News
-                </a>
+                </button>
+
+                {{-- <a href={{ route('create-news') }} wire:click="addNews" class="bg-yellow-600 hover:bg-yellow-700 text-black px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+                <flux:icon.plus class="size-6" />
+                Add News
+                </a> --}}
             </div>
 
             <!-- Filters & Search -->
@@ -107,5 +113,30 @@
     </div>
 
     <!-- Modal -->
+    @if($isOpen)
+    <div class="fixed z-50 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Background overlay -->
+            <div class="fixed inset-0 bg-gray-900/75 transition-opacity"></div>
 
+            <!-- Modal panel -->
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-gray-800 to-gray-500 px-6 py-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-2xl font-bold text-white">
+                            Create News Article
+                        </h3>
+                        <button type="button" class="text-white hover:text-gray-200 transition-colors" wire:click="closeModal">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                @livewire('admin.create-news')
+            </div>
+        </div>
+    </div>
+    @endif
 </div>
