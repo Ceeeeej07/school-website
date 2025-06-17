@@ -1,6 +1,7 @@
 # ANHS inspired SCHOOL WEBSITE
+## Overview
 
-A personal project inspired by ANHS's school website design. The goal is to recreate and enhance the website with modern features.
+This is a **personal project** dedicated to creating a website for **Antipas National High School**. The goal is to provide a platform where students, teachers, and the school community can access important information, news, and resources.
 
 ## Features
 - Dynamic content management
