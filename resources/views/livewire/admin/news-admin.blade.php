@@ -86,13 +86,10 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \Carbon\Carbon::parse($n['created_at'])->format('F d, Y')}}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <div class="flex items-center gap-2">
-                                    <button class="text-blue-600 hover:text-blue-900" title="View">
-                                        <flux:icon.eye class="size-6" />
-                                    </button>
-                                    <button class="text-green-600 hover:text-green-900" title="Edit">
+                                    <button type="button" wire:click="editNews({{ $n->id }})" class="text-green-600 hover:text-green-900" title="Edit">
                                         <flux:icon.pencil-square class="size-6" />
                                     </button>
-                                    <button class="text-red-600 hover:text-red-900" title="Delete">
+                                    <button type="button" wire:click="deleteNews({{ $n->id }})" wire:confirm="Delete this article?" class="text-red-600 hover:text-red-900" title="Delete">
                                         <flux:icon.trash class="size-6" />
                                     </button>
                                 </div>

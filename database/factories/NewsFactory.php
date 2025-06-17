@@ -24,7 +24,7 @@ class NewsFactory extends Factory
             'description' => $this->faker->paragraph(),
             'content' => $this->faker->text(500),
             'author' => $this->faker->name(),
-            'category' => $this->faker->randomElement(['Technology', 'Business', 'Sports', 'Entertainment']),
+            'category' => $this->faker->randomElement(['Academic', 'Entertainment', 'Sports']),
             'status' => $this->faker->randomElement(['Published', 'Draft']),
             'created_at' => now(),
             'updated_at' => now(),

@@ -28,6 +28,8 @@ class NewsAdmin extends Component
 
     public $isOpen = false;
 
+    public $recordNews;
+
 
 
     protected $paginationTheme = 'tailwind';
@@ -81,28 +83,62 @@ class NewsAdmin extends Component
     }
 
     // * redirector
-    public function addNews()
+    // public function addNews()
+    // {
+    //     return redirect()->route('create-news');
+    // }
+
+    // * Delete news
+    public function deleteNews($id)
     {
-        return redirect()->route('create-news');
+        try {
+            News::find($id)->delete();
+            session()->flash('message', 'News deleted successfully.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error: ' . $e->getMessage());
+        }
     }
 
     // * update/edit news
-    // public function editNews(News $news)
-    // {
-    //     $this->validate();
+    public function editNews($id)
+    {
+        $newsRecord = News::findOrFail($id);
+        $this->title = $newsRecord->title;
+        $this->is_featured = $newsRecord->is_featured;
+        $this->description = $newsRecord->description;
+        $this->content = $newsRecord->content;
+        $this->author = $newsRecord->author;
+        $this->category = $newsRecord->category;
+        $this->status = $newsRecord->status;
 
-    //     $newsList = News::findOrFail($news->id);
-    //     $this->title = $newsList->title;
-    //     $this->is_featured = $newsList->is_featured;
-    //     $this->description = $newsList->description;
-    //     $this->image = $newsList->image;
-    //     $this->content = $newsList->content;
-    //     $this->author = $newsList->author;
-    //     $this->category = $newsList->category;
-    //     $this->status = $newsList->status;
+        $this->openModal();
+    }
+    public function updateNews()
+    {
+        $this->validate();
 
-    //     $this->openModal();
-    // }
+        $data = [
+            'title' => $this->title,
+            'is_featured' => (bool) $this->is_featured,
+            'description' => $this->description,
+            'content' => $this->content,
+            'author' => $this->author,
+            'category' => $this->category,
+            'status' => $this->status,
+        ];
+
+        if ($this->image) {
+            $data['image'] = $this->image->store('news', 'public');
+        }
+
+        try {
+            $this->recordNews->update($data);
+            session()->flash('message', 'News updated successfully.');
+            $this->closeModal();
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error: ' . $e->getMessage());
+        }
+    }
 
     public function render()
     {
