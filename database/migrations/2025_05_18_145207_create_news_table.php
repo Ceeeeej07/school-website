@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->boolean('is_featured')->default(false);
             $table->string('author');
-            $table->string('category');
-            $table->string('status');
+            $table->enum('category', ['Academic', 'Entertainment', 'Sports']);
+            $table->enum('status', ['Draft', 'Published'])->default('Draft');
             $table->text('description');
             $table->text('content');
             $table->string('image')->nullable();

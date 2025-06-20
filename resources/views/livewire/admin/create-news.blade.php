@@ -16,17 +16,18 @@
                     <label class="block text-sm font-medium text-gray-700">Category</label>
                     <select wire:model="category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                         <option value="">Select Category</option>
-                        <option value="Academic">Academic</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Sports">Sports</option>
+                        @foreach(App\Category::cases() as $category)
+                        <option value="{{ $category->name }}">{{ $category->label() }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Status</label>
                     <select wire:model="status" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                         <option value="">Select Status</option>
-                        <option value="Published">Published</option>
-                        <option value="Draft">Draft</option>
+                        @foreach(App\Status::cases() as $status)
+                        <option value="{{ $status->name }}">{{ $status->label() }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>

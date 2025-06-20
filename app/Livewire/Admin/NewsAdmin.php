@@ -2,12 +2,14 @@
 
 namespace App\Livewire\Admin;
 
-use App\Livewire\Forms\NewsForm;
-use Livewire\Component;
-use Livewire\WithFileUploads;
+use App\Status;
+use App\Category;
 use App\Models\News;
-use Illuminate\Support\Str;
+use Livewire\Component;
+
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
+
 
 class NewsAdmin extends Component
 {
@@ -40,8 +42,8 @@ class NewsAdmin extends Component
         'content' => 'required|string',
         'description' => 'required|string|max:500',
         'author' => 'required|string|max:100',
-        'category' => 'in:Academic,Entertainment,Sports',
-        'status' => 'in:Draft,Published',
+        'category' => 'required|enum:' . Category::class,
+        'status' => 'required|enum:' . Status::class,
     ];
 
     // * Search and pagination
