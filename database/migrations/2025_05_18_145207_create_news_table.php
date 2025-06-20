@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->boolean('is_featured')->default(false);
             $table->string('author');
-            $table->enum('category', ['Academic', 'Entertainment', 'Sports']);
-            $table->enum('status', ['Draft', 'Published'])->default('Draft');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('status_id')->constrained()->onDelete('cascade');
             $table->text('description');
             $table->text('content');
             $table->string('image')->nullable();

@@ -19,8 +19,11 @@ class CreateNews extends Component
     public $content;
     public $image;
     public $author;
-    public $category = '';
-    public $status = '';
+    public $categories;
+    public $statuses;
+    public $category_id;
+    public $status_id;
+
 
     protected $rules = [
         'title' => 'required|string|max:255',
@@ -29,8 +32,8 @@ class CreateNews extends Component
         'content' => 'required|string',
         'description' => 'required|string|max:500',
         'author' => 'required|string|max:100',
-        'category' => 'required|enum:' . Category::class,
-        'status' => 'required|enum:' . Status::class,
+        'category_id' => 'required|exists:categories,id',
+        'status_id' => 'required|exists:statuses,id',
     ];
 
     public function storeNews()

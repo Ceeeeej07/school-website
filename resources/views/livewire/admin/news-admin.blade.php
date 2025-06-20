@@ -24,17 +24,18 @@
                 <flux:input type="text" wire:model.live="search" placeholder="Search news..." class="flex-grow md:flex-grow-[2]" />
 
                 <!-- Dropdowns with fixed widths -->
-                <flux:select wire:model.live="status" class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring w-full md:w-48">
+                <flux:select wire:model.live="status_id" class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring w-full md:w-48">
                     <flux:select.option value="">All Status</flux:select.option>
-                    <flux:select.option value="Published">Published</flux:select.option>
-                    <flux:select.option value="Draft">Draft</flux:select.option>
+                    @foreach($statuses as $status)
+                    <flux:select.option value="{{ $status->id }}">{{ $status->name }}</flux:select.option>
+                    @endforeach
                 </flux:select>
 
-                <flux:select wire:model.live="category" class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring w-full md:w-48">
+                <flux:select wire:model.live="category_id" class="px-4 py-2 bg-gray-600 border border-gray-300 rounded-lg focus:ring w-full md:w-48">
                     <flux:select.option value="">All Categories</flux:select.option>
-                    <flux:select.option value="Technology">Academic</flux:select.option>
-                    <flux:select.option value="Business">Entertainment</flux:select.option>
-                    <flux:select.option value="Sports">Sports</flux:select.option>
+                    @foreach ($categories as $category)
+                    <flux:select.option value="{{ $category->id }}">{{ $category->name }}</flux:select.option>
+                    @endforeach
                 </flux:select>
             </div>
         </div>

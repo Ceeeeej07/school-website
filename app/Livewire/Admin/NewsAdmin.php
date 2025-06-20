@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Admin;
 
-use App\Status;
-use App\Category;
+use App\Models\Category;
+use App\Models\Status;
 use App\Models\News;
 use Livewire\Component;
 
@@ -22,8 +22,8 @@ class NewsAdmin extends Component
     public $content;
     public $image;
     public $author;
-    public $category = '';
-    public $status = '';
+    // public $category = '';
+    // public $status = '';
 
     public $perPage = 5;
     public $search = '';
@@ -31,6 +31,9 @@ class NewsAdmin extends Component
     public $isOpen = false;
 
     public $recordNews;
+    public $category_id = '';
+    public $status_id = '';
+
 
 
 
@@ -42,8 +45,8 @@ class NewsAdmin extends Component
         'content' => 'required|string',
         'description' => 'required|string|max:500',
         'author' => 'required|string|max:100',
-        'category' => 'required|enum:' . Category::class,
-        'status' => 'required|enum:' . Status::class,
+        'category_id' => 'required|exists:categories,id',
+        'status_id' => 'required|exists:statuses,id',
     ];
 
     // * Search and pagination
@@ -110,8 +113,8 @@ class NewsAdmin extends Component
         $this->description = $newsRecord->description;
         $this->content = $newsRecord->content;
         $this->author = $newsRecord->author;
-        $this->category = $newsRecord->category;
-        $this->status = $newsRecord->status;
+        $this->category_id = $newsRecord->category_id;
+        $this->status_id = $newsRecord->status_id;
 
         $this->openModal();
     }
@@ -125,8 +128,8 @@ class NewsAdmin extends Component
             'description' => $this->description,
             'content' => $this->content,
             'author' => $this->author,
-            'category' => $this->category,
-            'status' => $this->status,
+            'category_id' => $this->category_id,
+            'status_id' => $this->status_id,
         ];
 
         if ($this->image) {
@@ -153,16 +156,18 @@ class NewsAdmin extends Component
                         ->orWhere('author', 'like', '%' . $this->search . '%');
                 });
             })
-            ->when($this->status, function ($q) {
-                $q->where('status', $this->status);
+            ->when($this->status_id, function ($q) {
+                $q->where('status_id', $this->status_id);
             })
-            ->when($this->category, function ($q) {
-                $q->where('category', $this->category);
+            ->when($this->category_id, function ($q) {
+                $q->where('category_id', $this->category_id);
             })
             ->latest();
 
         return view('livewire.admin.news-admin', [
-            'newsList' => $query->paginate($this->perPage)->withQueryString()
+            'newsList' => $query->paginate($this->perPage)->withQueryString(),
+            'categories' => Category::all(),
+            'statuses' => Status::all(),
         ]);
 
         // return view('livewire.admin.news-admin', [
