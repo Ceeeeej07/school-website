@@ -24,8 +24,8 @@ class NewsFactory extends Factory
             'description' => $this->faker->paragraph(),
             'content' => $this->faker->text(500),
             'author' => $this->faker->name(),
-            // 'category' => $this->faker->randomElement(Category::cases())->value,
-            // 'status' => $this->faker->randomElement(Status::cases())->value,
+            'category_id' => \App\Models\Category::inRandomOrder()->first()->id,
+            'status_id' => \App\Models\Status::inRandomOrder()->first()->id,
             'created_at' => now(),
             'updated_at' => now(),
         ];

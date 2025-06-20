@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Admin;
 
-use App\Status;
-use App\Category;
+use App\Models\Status;
+use App\Models\Category;
 use App\Models\News;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -19,11 +19,16 @@ class CreateNews extends Component
     public $content;
     public $image;
     public $author;
-    public $categories;
-    public $statuses;
     public $category_id;
     public $status_id;
+    public $categories;
+    public $statuses;
 
+    public function mount()
+    {
+        $this->categories = Category::all();
+        $this->statuses = Status::all();
+    }
 
     protected $rules = [
         'title' => 'required|string|max:255',
@@ -35,6 +40,8 @@ class CreateNews extends Component
         'category_id' => 'required|exists:categories,id',
         'status_id' => 'required|exists:statuses,id',
     ];
+
+
 
     public function storeNews()
     {
@@ -59,9 +66,9 @@ class CreateNews extends Component
 
 
         try {
-            // dd($data);
-            News::create($data);
-            $this->createNews();
+            dd($data);
+            // News::create($data);
+            // $this->createNews();
             session()->flash('message', 'News created successfully.');
         } catch (\Exception $e) {
             session()->flash('error', 'Error: ' . $e->getMessage());

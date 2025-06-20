@@ -34,6 +34,11 @@ class NewsAdmin extends Component
     public $category_id = '';
     public $status_id = '';
 
+    public $categories;
+    public $statuses;
+
+    // public $newsList;
+
 
 
 
@@ -48,6 +53,14 @@ class NewsAdmin extends Component
         'category_id' => 'required|exists:categories,id',
         'status_id' => 'required|exists:statuses,id',
     ];
+
+    public function mount()
+    {
+        // $this->newsList = News::query()->paginate($this->perPage)->withQueryString();
+
+        $this->categories = Category::all();
+        $this->statuses = Status::all();
+    }
 
     // * Search and pagination
     public function updatingSearch()
@@ -166,8 +179,6 @@ class NewsAdmin extends Component
 
         return view('livewire.admin.news-admin', [
             'newsList' => $query->paginate($this->perPage)->withQueryString(),
-            'categories' => Category::all(),
-            'statuses' => Status::all(),
         ]);
 
         // return view('livewire.admin.news-admin', [
