@@ -19,8 +19,8 @@ class CreateNews extends Component
     public $content;
     public $image;
     public $author;
-    public $category_id;
-    public $status_id;
+    public $category_id = '';
+    public $status_id = '';
     public $categories;
     public $statuses;
 
@@ -53,8 +53,8 @@ class CreateNews extends Component
             'description' => $this->description,
             'content' => $this->content,
             'author' => $this->author,
-            'category' => $this->category,
-            'status' => $this->status,
+            'category_id' => $this->category_id,
+            'status_id' => $this->status_id,
 
         ];
 
@@ -66,15 +66,14 @@ class CreateNews extends Component
 
 
         try {
-            dd($data);
-            // News::create($data);
-            // $this->createNews();
+            // dd($data);
+            News::create($data);
+            $this->createNews();
             session()->flash('message', 'News created successfully.');
         } catch (\Exception $e) {
             session()->flash('error', 'Error: ' . $e->getMessage());
         }
     }
-
 
     public function testSubmit()
     {
